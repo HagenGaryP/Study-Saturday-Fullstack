@@ -16,6 +16,7 @@ export default class Main extends Component {
 
     this.selectStudent = this.selectStudent.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.addStudent = this.addStudent.bind(this);
   }
 
   componentDidMount() {
@@ -27,7 +28,7 @@ export default class Main extends Component {
     try {
       const { data } = await axios.get('/student');
       this.setState({ students: data });
-      console.log('THis is the State', this.state);
+      console.log('This is the State', this.state);
     } catch (err) {
       console.error(err);
     }
@@ -36,6 +37,18 @@ export default class Main extends Component {
   selectStudent(student) {
     return this.setState({
       selectedStudent: student,
+    });
+  }
+
+  async addStudent(student) {
+    // console log response from the await after.
+    // the data is the response we're getting from the axios req
+    // post is going to want something to respond back with,
+    // which is the student object that was passed into the function
+    const {data} = await axios.post('/student', student);
+    this.setState({
+      students: [...this.state.students, data],
+      showStudent: false
     });
   }
 
@@ -51,7 +64,7 @@ export default class Main extends Component {
       <div>
         <h1>Students</h1>
         <button onClick={this.handleClick}>Add Student</button>
-        {this.state.showStudent ? <NewStudentForm /> : null}
+        {this.state.showStudent ? <NewStudentForm addStudent={this.addStudent} /> : null}
         <table>
           <thead>
             <tr>
