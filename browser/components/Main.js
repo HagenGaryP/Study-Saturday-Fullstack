@@ -1,8 +1,11 @@
+/* eslint-disable react/button-has-type */
+/* eslint-disable react/no-access-state-in-setstate */
 import React, { Component } from 'react';
 import axios from 'axios';
 
 import StudentList from './StudentList.js';
 import SingleStudent from './SingleStudent.js';
+import NewStudentForm from './NewStudentForm.js';
 
 export default class Main extends Component {
   constructor(props) {
@@ -10,9 +13,11 @@ export default class Main extends Component {
     this.state = {
       students: [],
       selectedStudent: {},
+      toggleForm: false
     };
 
     this.selectStudent = this.selectStudent.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
@@ -35,10 +40,26 @@ export default class Main extends Component {
     });
   }
 
+  createStudent(student) {
+    this.setSetate({
+      students: [...this.state.students, student]
+    });
+  }
+
+  handleClick() {
+   this.setState({
+     toggleForm: !this.state.toggleForm
+   });
+  }
+
   render() {
     return (
       <div>
         <h1>Students</h1>
+        <button onClick={this.handleClick}>Submit Student</button>
+        {
+          this.state.toggleForm ? <NewStudentForm createStudent={this.createStudent} /> : null
+        }
         <table>
           <thead>
             <tr>

@@ -39268,7 +39268,13 @@ var _SingleStudent = __webpack_require__(378);
 
 var _SingleStudent2 = _interopRequireDefault(_SingleStudent);
 
+var _NewStudentForm = __webpack_require__(379);
+
+var _NewStudentForm2 = _interopRequireDefault(_NewStudentForm);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
@@ -39276,7 +39282,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /* eslint-disable react/button-has-type */
+/* eslint-disable react/no-access-state-in-setstate */
+
 
 var Main = function (_Component) {
   _inherits(Main, _Component);
@@ -39288,10 +39296,12 @@ var Main = function (_Component) {
 
     _this.state = {
       students: [],
-      selectedStudent: {}
+      selectedStudent: {},
+      toggleForm: false
     };
 
     _this.selectStudent = _this.selectStudent.bind(_this);
+    _this.handleClick = _this.handleClick.bind(_this);
     return _this;
   }
 
@@ -39351,6 +39361,20 @@ var Main = function (_Component) {
       });
     }
   }, {
+    key: 'createStudent',
+    value: function createStudent(student) {
+      this.setSetate({
+        students: [].concat(_toConsumableArray(this.state.students), [student])
+      });
+    }
+  }, {
+    key: 'handleClick',
+    value: function handleClick() {
+      this.setState({
+        toggleForm: !this.state.toggleForm
+      });
+    }
+  }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
@@ -39361,6 +39385,12 @@ var Main = function (_Component) {
           null,
           'Students'
         ),
+        _react2.default.createElement(
+          'button',
+          { onClick: this.handleClick },
+          'Submit Student'
+        ),
+        this.state.toggleForm ? _react2.default.createElement(_NewStudentForm2.default, { createStudent: this.createStudent }) : null,
         _react2.default.createElement(
           'table',
           null,
@@ -40425,6 +40455,165 @@ var SingleStudent = function SingleStudent(props) {
 };
 
 exports.default = SingleStudent;
+
+/***/ }),
+/* 379 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(49);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _axios = __webpack_require__(358);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /* eslint-disable react/jsx-child-element-spacing */
+
+
+var NewStudentForm = function (_Component) {
+  _inherits(NewStudentForm, _Component);
+
+  function NewStudentForm(props) {
+    _classCallCheck(this, NewStudentForm);
+
+    var _this = _possibleConstructorReturn(this, (NewStudentForm.__proto__ || Object.getPrototypeOf(NewStudentForm)).call(this, props));
+
+    _this.state = {
+      firstname: '',
+      lastname: '',
+      email: ''
+    };
+    _this.handleSubmit = _this.handleSubmit.bind(_this);
+    _this.handleChange = _this.handleChange.bind(_this);
+    return _this;
+  }
+
+  _createClass(NewStudentForm, [{
+    key: 'handleChange',
+    value: function handleChange(event) {
+      this.setState(_defineProperty({}, event.target.name, event.target.value));
+    }
+  }, {
+    key: 'handleSubmit',
+    value: function () {
+      var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(event) {
+        var _ref2, data;
+
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                event.preventDefault();
+                _context.prev = 1;
+                _context.next = 4;
+                return _axios2.default.post('/', { firstname: this.state.firstname, lastname: this.state.lastname, email: this.state.email });
+
+              case 4:
+                _ref2 = _context.sent;
+                data = _ref2.data;
+
+                this.props.CreateStudent(data);
+                this.setState({
+                  firstname: '',
+                  lastname: '',
+                  email: ''
+                });
+
+                _context.next = 13;
+                break;
+
+              case 10:
+                _context.prev = 10;
+                _context.t0 = _context['catch'](1);
+
+                console.log(_context.t0);
+
+              case 13:
+              case 'end':
+                return _context.stop();
+            }
+          }
+        }, _callee, this, [[1, 10]]);
+      }));
+
+      function handleSubmit(_x) {
+        return _ref.apply(this, arguments);
+      }
+
+      return handleSubmit;
+    }()
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'form',
+        { onSubmit: this.handleSubmit },
+        _react2.default.createElement(
+          'label',
+          null,
+          'First Name:',
+          _react2.default.createElement('input', {
+            type: 'text',
+            name: 'firstname',
+            value: this.state.firstname,
+            onChange: this.handleChange
+          })
+        ),
+        _react2.default.createElement(
+          'label',
+          null,
+          'Last Name:',
+          _react2.default.createElement('input', {
+            type: 'text',
+            name: 'lastname',
+            value: this.state.lastname,
+            onChange: this.handleChange
+          })
+        ),
+        _react2.default.createElement(
+          'label',
+          null,
+          'Email:',
+          _react2.default.createElement('input', {
+            type: 'text',
+            name: 'email',
+            value: this.state.email,
+            onChange: this.handleChange
+          })
+        ),
+        _react2.default.createElement(
+          'button',
+          { type: 'submit' },
+          'Submit'
+        )
+      );
+    }
+  }]);
+
+  return NewStudentForm;
+}(_react.Component);
+
+exports.default = NewStudentForm;
 
 /***/ })
 /******/ ]);
